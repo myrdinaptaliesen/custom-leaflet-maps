@@ -1,2 +1,2 @@
 # custom-leaflet-maps
-Projet présentant différentes façon d'utiliser leaflet
+Projet présentant différentes façons d'utiliser leaflet
