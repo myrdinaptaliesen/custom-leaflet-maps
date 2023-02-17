@@ -1,9 +1,14 @@
 //Récupération des coordonnées geolocalisées
 function getLatLong(callback) {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            callback(position.coords.latitude, position.coords.longitude);
-        });
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                callback(position.coords.latitude, position.coords.longitude);
+            },
+            function(error) {
+                callback(48.866667, 2.333333);
+            }
+        );
     } else {
         console.log("La géolocalisation n'est pas prise en charge par ce navigateur.");
     }
