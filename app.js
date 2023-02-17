@@ -5,12 +5,14 @@ function getLatLong(callback) {
             function(position) {
                 callback(position.coords.latitude, position.coords.longitude);
             },
+            //Gestion du refus de géolocalisation
             function(error) {
                 callback(48.866667, 2.333333);
             }
         );
     } else {
-        console.log("La géolocalisation n'est pas prise en charge par ce navigateur.");
+        //Gestion de non prise en charge de la géolocalisation par le navigateur
+        callback(48.866667, 2.333333);
     }
 }
 
@@ -27,6 +29,9 @@ getLatLong(function(latitude, longitude) {
         draggable: true
     }).addTo(map);
 
+    //Ajout d'une infobulle sur le marqueur
+    marker.bindPopup("Choisissez votre lieu").openPopup();
+
     // Fonction appelée lors du début du déplacement du marqueur
     function startDragging(e) {
         marker.dragging = true;
@@ -42,6 +47,7 @@ getLatLong(function(latitude, longitude) {
             marker.setLatLng(newLatLng);
             marker.dragStart = e.latlng;
 
+
         }
 
     }
@@ -53,11 +59,16 @@ getLatLong(function(latitude, longitude) {
 
         var lat = marker.getLatLng().lat;
         var lng = marker.getLatLng().lng;
-        console.log('Nouveau marqueur placé à la position ' + lat + ', ' + lng);
+        document.getElementById("latInput").value = lat;
+        document.getElementById("lngInput").value = lng;
+
     }
 
     // Ajouter les événements de glisser-déposer au marqueur
     marker.on('mousedown', startDragging);
     marker.on('mousemove', drag);
     marker.on('mouseup', stopDragging);
+    marker.on('click', function() {
+        marker.closePopup();
+    });
 });
